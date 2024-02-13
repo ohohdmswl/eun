@@ -23,6 +23,11 @@ public class MainController {
 	public String mainPageView(@ModelAttribute("mainVO") MainVO mainVO, ModelMap model) throws Exception {
 
 		System.out.println("아니 어디서 안되는건데");
+		
+		int result = mainService.testCount();
+		
+		System.out.println("@@@ : " + result);
+		
 		return "eun/main/dash/mainPage";
 	}
 	

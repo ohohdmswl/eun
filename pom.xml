@@ -100,6 +100,34 @@
 			<version>2.5.2</version>
 		</dependency>
         
+
+		<!--  ////////////////// 추가 ///////////////////// -->
+        <dependency>
+		    <groupId>org.apache.commons</groupId>
+		    <artifactId>commons-dbcp2</artifactId>
+		    <version>2.7.0</version>
+		</dependency>
+		
+		<dependency>
+            <groupId>commons-dbcp</groupId>
+            <artifactId>commons-dbcp</artifactId>
+            <version>1.4</version>
+        </dependency>
+		<!-- DB: postgresql -->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.6.0</version>
+        </dependency>
+		
+		<!-- 쿼리문과 쿼리 결과를 보기 좋게 로그로 기록  -->
+		<dependency>
+			<groupId>org.bgee.log4jdbc-log4j2</groupId>
+			<artifactId>log4jdbc-log4j2-jdbc4.1</artifactId>
+			<version>1.16</version>
+		</dependency>
+
+
         <!-- mysql이나 oracle DB 사용시 아래 설정 추가  
         <dependency>
             <groupId>com.googlecode.log4jdbc</groupId>

@@ -1,5 +1,13 @@
 package eun.proj.service.impl;
 
-public class MainDAO {
+import javax.annotation.Resource;
 
+import org.egovframe.rte.psl.dataaccess.EgovAbstractMapper;
+import org.springframework.stereotype.Repository;
+
+@Repository("mainDAO")
+public class MainDAO extends EgovAbstractMapper{
+
+	
+	
 }
