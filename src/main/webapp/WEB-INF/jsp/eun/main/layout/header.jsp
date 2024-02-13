@@ -11,11 +11,6 @@
 <script src="${pageContext.request.contextPath}/js/lib/jquery.multiselect2.js"></script>
 <script src="${pageContext.request.contextPath}/js/lib/jquery.ztree.all.min.js"></script>
 
-<!-- taglib -->
-<jsp:include page="/WEB-INF/jsp/eun/main/layout/taglib.jsp"></jsp:include>
 
 </head>
 <body>
-
-</body>
-</html>

@@ -1,17 +1,11 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <!-- header -->
-<jsp:include page="/WEB-INF/jsp/eun/main/layout/header.jsp"></jsp:include>
+<%-- <jsp:include page="/WEB-INF/jsp/eun/main/layout/header.jsp"></jsp:include> --%>
+<%@ include file="/WEB-INF/jsp/eun/main/layout/header.jsp"%>
+<%@ include file="/WEB-INF/jsp/eun/main/layout/taglib.jsp"%>
+<link rel="stylesheet" type="text/css" href="<c:url value="css/zTreeStyle.css"/>">
 
-
-</head>
-<body>
 
 <h1>안녕 나는 메인페이지야</h1>
 
@@ -22,7 +16,7 @@
 </body>
 
 	<SCRIPT type="text/javascript">
-		
+		/*
 		var setting = {	};
 
 		var zNodes =[
@@ -72,6 +66,26 @@
 
 		];
 
+		*/
+		
+		var setting = {
+				data: {
+					simpleData: {
+						enable: true,
+						idKey: "id",
+						pIdKey: "pId",
+						rootPId: 0
+					}
+				}
+			};
+		
+		var zNodes = [
+		    {"id":1, "pId":0, "name":"test1"},
+		    {"id":11, "pId":1, "name":"test11"},
+		    {"id":12, "pId":1, "name":"test12"},
+		    {"id":111, "pId":11, "name":"test111"}
+		]
+		
 		$(document).ready(function(){
 			$.fn.zTree.init($("#treeDemo"), setting, zNodes);
 		});
