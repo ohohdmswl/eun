@@ -42,6 +42,10 @@ public class MainController {
 		//DB 노드 가져와서 트리표출
 		List<MainVO> mainList = mainService.selectMainList();
 		logger.info("selectMainList : " + mainList);
+		//list 빈값, null일 경우 처리
+		
+		
+		
 		
 		//mainList (List -> json)
 		ObjectMapper objectMapper = new ObjectMapper();

@@ -119,42 +119,37 @@
 		
 		}); //ready end
 		
-		function cnvrtTree() {
-			
-			//모델 값으로 받아온 list
-			var jsonData = ${jsonData}
-			console.log(jsonData);
+/*
+ * zTree - zNodes data 가공 
+ * DB값으로 트리 id, pId, name 값 가공
+ */
+function cnvrtTree() {
+	
+	//모델 값으로 받아온 list
+	var jsonData = ${jsonData}
+	console.log(jsonData);
 
-			//[id-> my_sn, pId -> parent_sn, name -> nm]
-			var jsonTree = [];
-			console.log("jsonData.length : " + jsonData.length);
-			
-			for (var i = 0; i < jsonData.length; i++) {
-				var data = "";
-				var id = jsonData[i]["my_sn"];
-				var pId = jsonData[i]["parent_sn"];
-				if(jsonData[i]["parent_sn"] == null ||  jsonData[i]["parent_sn"] == "") pId = '0'; 
-				var name = jsonData[i]["nm"];
-				console.log("중간확인 : " + [i] + "번째 " + id + " : " + pId + " : "+ name);
-			
-// 				data += '{"id":' + id + ', "pId":' + pId + ', "name":"' + name + '"}';
-// 			    jsonTree.push(data);
-				
-				var obj = {
-						  "id": id,
-						  "pId": pId,
-						  "name": name
-						};
-				
-			    jsonTree.push(obj);
-
-			}//for
-			
-			console.log("반복문 확인 : " + jsonTree);
-			console.log(jsonTree);
-			return jsonTree;
-			
-		}//cnvrtTree()
+	//[id-> my_sn, pId -> parent_sn, name -> nm]
+	var jsonTree = [];
+	console.log("jsonData.length : " + jsonData.length);
+	
+	for (var i = 0; i < jsonData.length; i++) {
+		var data = "";
+		var id = jsonData[i]["my_sn"];
+		var pId = jsonData[i]["parent_sn"];
+		if(jsonData[i]["parent_sn"] == null ||  jsonData[i]["parent_sn"] == "") pId = '0'; 
+		var name = jsonData[i]["nm"];
+// 		console.log("중간확인 : " + [i] + "번째 " + id + " : " + pId + " : "+ name);
+	
+		var obj = {
+				  "id": id,
+				  "pId": pId,
+				  "name": name
+				};
+	    jsonTree.push(obj);
+	}//for
+	return jsonTree;
+}//cnvrtTree()
 		
 	</SCRIPT>
 
