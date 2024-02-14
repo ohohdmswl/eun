@@ -6,7 +6,16 @@
 <select id="testCount" resultType="int">
 	select count(*)
 	from tb_board
-	
+</select>
+
+<select id="selectMainList" resultType="mainVO">
+	select 
+			 parent_sn
+			,nm
+			,my_sn
+			,day_wrtr
+			,day_wrtday
+	from 	daytest
 </select>
 
 

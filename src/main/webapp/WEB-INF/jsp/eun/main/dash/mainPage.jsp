@@ -13,6 +13,9 @@
 		<ul id="treeDemo" class="ztree"></ul>
 	</div>
 
+
+
+
 </body>
 
 	<SCRIPT type="text/javascript">
@@ -71,21 +74,27 @@
 		var setting = {
 				data: {
 					simpleData: {
-						enable: true,
-						idKey: "id",
-						pIdKey: "pId",
-						rootPId: 0
+						enable: true
+// 						idKey: "id",
+// 						pIdKey: "pId",
+// 						rootPId: 0
 					}
 				}
 			};
 		
-		var zNodes = [
-			/*
+		/* var zNodes = [
+			
 		    {"id":1, "pId":0, "name":"test1"},
 		    {"id":11, "pId":1, "name":"test11"},
 		    {"id":12, "pId":1, "name":"test12"},
 		    {"id":111, "pId":11, "name":"test111"}
-		    */
+		    
+			
+		    {"id":'1', "pId":'0', "name":"test1"},
+		    {"id":'11', "pId":'1', "name":"test11"},
+		    {"id":'12', "pId":'1', "name":"test12"},
+		    {"id":'111', "pId":'11', "name":"test111"}
+		    
 		    
 		    {"id":1, "pId":0, "name":"test1"},
 		    {"id":2, "pId":1, "name":"test2"},
@@ -94,13 +103,58 @@
 		    {"id":5, "pId":4, "name":"test5"},
 		    {"id":6, "pId":2, "name":"test6"},
 		    {"id":7, "pId":5, "name":"test7"},
-		    {"id":8, "pId":0, "name":"test8"}
+		    {"id":8, "pId":0, "name":"test8"} 
 		    
-		]
+		] */
 		
 		$(document).ready(function(){
-			$.fn.zTree.init($("#treeDemo"), setting, zNodes);
-		});
+			
+		var zNodes = cnvrtTree();
+		$.fn.zTree.init($("#treeDemo"), setting, zNodes);
+		
+		var jsonData = ${jsonData}
+		console.log(jsonData);
+		
+		
+		
+		}); //ready end
+		
+		function cnvrtTree() {
+			
+			//모델 값으로 받아온 list
+			var jsonData = ${jsonData}
+			console.log(jsonData);
+
+			//[id-> my_sn, pId -> parent_sn, name -> nm]
+			var jsonTree = [];
+			console.log("jsonData.length : " + jsonData.length);
+			
+			for (var i = 0; i < jsonData.length; i++) {
+				var data = "";
+				var id = jsonData[i]["my_sn"];
+				var pId = jsonData[i]["parent_sn"];
+				if(jsonData[i]["parent_sn"] == null ||  jsonData[i]["parent_sn"] == "") pId = '0'; 
+				var name = jsonData[i]["nm"];
+				console.log("중간확인 : " + [i] + "번째 " + id + " : " + pId + " : "+ name);
+			
+// 				data += '{"id":' + id + ', "pId":' + pId + ', "name":"' + name + '"}';
+// 			    jsonTree.push(data);
+				
+				var obj = {
+						  "id": id,
+						  "pId": pId,
+						  "name": name
+						};
+				
+			    jsonTree.push(obj);
+
+			}//for
+			
+			console.log("반복문 확인 : " + jsonTree);
+			console.log(jsonTree);
+			return jsonTree;
+			
+		}//cnvrtTree()
 		
 	</SCRIPT>
 

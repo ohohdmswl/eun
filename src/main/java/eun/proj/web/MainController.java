@@ -1,11 +1,17 @@
 package eun.proj.web;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import eun.proj.service.MainService;
 import eun.proj.service.MainVO;
@@ -14,9 +20,15 @@ import eun.proj.service.MainVO;
 @Controller
 public class MainController {
 
-	/** EgovSampleService */
+	/* Service */
 	@Resource (name = "mainService")
 	private MainService mainService;
+	
+	
+   // Set logger
+   private final Logger logger = LogManager.getLogger(this.getClass());
+   // Get class name for logger
+   private final String className = this.getClass().toString();
 	
 
 	@RequestMapping(value = "/mainPage.do")
@@ -25,10 +37,24 @@ public class MainController {
 		System.out.println("아니 어디서 안되는건데");
 		
 		int result = mainService.testCount();
-		
 		System.out.println("@@@ : " + result);
+		
+		//DB 노드 가져와서 트리표출
+		List<MainVO> mainList = mainService.selectMainList();
+		logger.info("selectMainList : " + mainList);
+		
+		//mainList (List -> json)
+		ObjectMapper objectMapper = new ObjectMapper();
+        String jsonData = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(mainList);
+        logger.info("jsonData : " + jsonData);
+
+		model.addAttribute("jsonData", jsonData);
 		
 		return "eun/main/dash/mainPage";
 	}
+	
+	
+	
+	
 	
 }
