@@ -1,0 +1,22 @@
+-- public.daytest definition
+-- Drop table
+-- DROP TABLE public.daytest;
+
+CREATE TABLE public.daytest (
+	my_sn varchar(20) NOT NULL,
+	parent_sn varchar(20) NULL,
+	nm text NULL,
+	day_wrtr varchar(40) NULL,
+	day_wrtday timestamp NULL,
+	CONSTRAINT "PK_daytest" PRIMARY KEY (my_sn)
+);
+
+-- public.daytest_my_sn_seq definition
+-- DROP SEQUENCE public.daytest_my_sn_seq;
+CREATE SEQUENCE public.daytest_my_sn_seq
+	INCREMENT BY 1
+	MINVALUE 1
+	MAXVALUE 9223372036854775807
+	START 1
+	CACHE 1
+	NO CYCLE;

@@ -34,30 +34,27 @@ public class MainController {
 	@RequestMapping(value = "/mainPage.do")
 	public String mainPageView(@ModelAttribute("mainVO") MainVO mainVO, ModelMap model) throws Exception {
 
-		System.out.println("아니 어디서 안되는건데");
+		logger.info("##### [mainPageView] (/mainPage.do)  #####");
 		
 		int result = mainService.testCount();
-		System.out.println("@@@ : " + result);
+		logger.info("@@@ : " + result);
 		
 		//DB 노드 가져와서 트리표출
 		List<MainVO> mainList = mainService.selectMainList();
 		logger.info("selectMainList : " + mainList);
 		//list 빈값, null일 경우 처리
 		
-		
-		
-		
 		//mainList (List -> json)
 		ObjectMapper objectMapper = new ObjectMapper();
         String jsonData = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(mainList);
-        logger.info("jsonData : " + jsonData);
+//        logger.info("jsonData : " + jsonData);
 
 		model.addAttribute("jsonData", jsonData);
 		
 		return "eun/main/dash/mainPage";
 	}
 	
-	
+
 	
 	
 	
