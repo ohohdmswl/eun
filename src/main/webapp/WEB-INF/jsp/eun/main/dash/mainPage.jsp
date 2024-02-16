@@ -5,30 +5,81 @@
 <%@ include file="/WEB-INF/jsp/eun/main/layout/header.jsp"%>
 <%@ include file="/WEB-INF/jsp/eun/main/layout/taglib.jsp"%>
 <link rel="stylesheet" type="text/css" href="<c:url value="css/zTreeStyle.css"/>">
+<link rel="stylesheet" type="text/css" href="<c:url value="css/main.css"/>">
 
 
 <h6>안녕 나는 메인페이지야</h6>
 
-	<div class="zTreeDemoBackground left">
+	<div class="zTreeDemoDiv mb40">
 		<ul id="treeDemo" class="ztree"></ul>
 	</div>
 
 	<form id="frm" name="frm" method="post" enctype="multipart/form-data">
 		<input type="hidden" name="parent_sn" id="parent_sn" value="" />
-		<input type="hidden" name="nm" id="nm" value="" />
 		<input type="hidden" name="my_sn" id="my_sn" value="" />
 		<input type="hidden" name="day_wrtr" id="day_wrtr" value="" />
 		<input type="hidden" name="day_wrtday" id="day_wrtday" value="" />
 	
+		<!-- 변경할 새로운 이름 input id = "nm" -->
+		<!-- <input type="hidden" name="nm" id="nm" value="" /> -->
 		
-		<button type="button" class="" onclick="javascript:fncRegist();">다운로드</button>
-		<button type="button" class="" onclick="javascript:fncRegist();">[노드]삭제</button>
-		<button type="button" class="" onclick="javascript:fncRegist();">[파일]삭제</button>
-		<button type="button" class="" onclick="javascript:fncRegist();">[노드]정보명변경</button>
-		<button type="button" class="" onclick="javascript:fncRegist();">[파일]정보명변경</button>
+		<div class="btn mb20">
+		<!-- 선택한 파일 다운로드 -->
+		<button type="button" class="" onclick="javascript:fncFileDown();">다운로드</button>
+		</div>
 		
-<!-- 		<input type="text"  -->
-	
+		
+		<div class="btn mb20">
+		<!-- 선택한 노드 삭제 -> 그룹명 삭제시 해당 그룹노드 포함 하위 그룹노드, 파일 모두 삭제
+						 -> 노드만 있는 경우에 노드만 삭제 (위의 조건에서 분기하면 되지 않을까? 자식 체크해서) -->
+		<button type="button" class="" onclick="javascript:fncNodeDel();">[노드]삭제</button>
+		</div>
+		
+		<div class="btn mb20">
+		<!-- 선택한 파일 삭제 -> 해당 파일 삭제
+										-> 그룸노드 하위에 파일이 1개 이상 (그룹노드 그대로 유지)
+										-> 그룹노드 하위에 파일이 0개 
+																	-> 그룹노드 같이 삭제
+																	-> 그룹노드 유지)  -->
+		<button type="button" class="" onclick="javascript:fncFileDel();">[파일]삭제</button>
+		</div>
+		
+		<div class="btn mb20">
+<!-- 		<input type="text" id="nm" name="nm" title="그룹정보명" maxlength="100" /> -->
+		<!-- 선택한 노드명 변경 -> 선택한 노드명만 변경 -->
+<!-- 		<button type="button" class="" onclick="javascript:fncNodeNmUpdt();">[노드]정보명변경</button> -->
+		<button type="button" class="" onclick="javascript:fncNordRename();">[노드]정보명변경</button>
+		</div>
+		
+		<div class="btn mb20">
+<!-- 		<input type="text" id="file_nm" name="file_nm" title="파일명" maxlength="100" /> -->
+		<!-- 선택한 파일명 변경 -> 선택한 파일명만 변경 -->
+		<button type="button" class="" onclick="javascript:fncFileNmUpdt();">[파일]정보명변경</button>
+		</div>
+		
+		
+		<!-- tb div -->
+		<div>
+			<table class="table">
+				<colgroup>
+					<col width="">
+				</colgroup>
+				<tbody>
+					<tr>
+						<th>그룹명</th>
+						<td>
+							<input type="text" id="nm" name="nm" title="그룹정보명" maxlength="200" />
+						</td>
+					</tr>
+					<tr>
+						<th>첨부파일</th>
+						<td></td>
+					</tr>
+				</tbody>
+				
+			</table>
+		</div>
+		
 	
 	</form>
 
@@ -54,7 +105,13 @@
 				},
 				callback: {
 					onClick: fncClikNode
+// 					,onRename: fncNordRename
+				},
+				edit: {
+					editNameSelectAll: true
+					,removeTitle: "remove the node"	//이게 뭔지 모르겠어
 				}
+				
 			};
 		
 		/*zNodes 샘플*/
@@ -81,6 +138,9 @@
 		    
 		] */
 		
+		//zTree 객체 변수 선언
+		var treeObj;
+		
 		$(document).ready(function(){
 		
 			//db에서 받아온 treenode값 (type: json) 
@@ -91,6 +151,8 @@
 			var zNodes = cnvrtTree(jsonData);
 			$.fn.zTree.init($("#treeDemo"), setting, zNodes);
 			
+			//zTree 객체 할당
+			treeObj = $.fn.zTree.getZTreeObj("treeDemo");
 		
 		
 		
@@ -141,12 +203,75 @@ function fncClikNode(event, treeId, treeNode, clickFlag) {
 	
 	$("#my_sn").val(treeNode.id);
 	$("#parent_sn").val(treeNode.pId);
-	$("#nm").val(treeNode.name);
+// 	$("#nm").val(treeNode.name);
 	$("#day_wrtday").val(treeNode.day_wrtday);
 	$("#day_wrtr").val(treeNode.day_wrtr);
 }		
 		
-		
+/**
+ * 
+ */
+function fncFileDown() {
+	
+}
+
+/**
+ * 
+ */
+function fncNodeDel() {
+	
+}
+
+/**
+ * 
+ */
+function fncFileDel() {
+	
+}
+
+/**
+ * 
+ */
+function fncNodeNmUpdt() {
+// 	$("#my_sn").val(treeNode.id);
+// 	$("#parent_sn").val(treeNode.pId);
+// 	$("#nm").val(treeNode.name);
+// 	$("#day_wrtday").val(treeNode.day_wrtday);
+// 	$("#day_wrtr").val(treeNode.day_wrtr);
+	
+// 	var treeObj = $.fn.zTree.getZTreeObj("treeDemo");
+	var nodes = treeObj.getSelectedNodes();
+// 	var nodes = treeObj.getNodes();
+	console.log("왜 안되냐1 : " + nodes[0].name);
+	treeObj.editName(nodes[0]);
+	
+	
+	
+	
+	
+}
+
+/**
+ * 
+ */
+function fncFileNmUpdt() {
+	
+}
+
+
+
+function fncNordRename(event, treeId, treeNode, isCancel) {
+	
+	var nodes = treeObj.getSelectedNodes();
+// 	var nodes = treeObj.getNodes();
+	console.log("왜 안되냐77 : " + nodes[0].name);
+	treeObj.editName(nodes[0]);
+	
+	alert(treeNode.id + ", " + treeNode.name);
+	
+	
+	
+}
 
 		
 		
