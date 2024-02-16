@@ -26,4 +26,6 @@ public class MainServiceImpl extends EgovAbstractServiceImpl implements MainServ
 	public List<MainVO> selectMainList() {
 		return mainDAO.selectList("selectMainList");
 	}
+	
+	
 }

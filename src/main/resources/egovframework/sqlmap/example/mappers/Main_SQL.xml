@@ -10,12 +10,13 @@
 
 <select id="selectMainList" resultType="mainVO">
 	select 
-			 parent_sn
-			,nm
-			,my_sn
-			,day_wrtr
-			,day_wrtday
-	from 	daytest
+				 parent_sn
+				,nm
+				,my_sn
+				,day_wrtr
+				,day_wrtday
+	from 		daytest
+	ORDER BY 	my_sn ::int asc	<!-- order by 없으면 하위노드 순서 정리 안됨 -->
 </select>
 
 

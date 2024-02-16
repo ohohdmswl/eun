@@ -51,7 +51,11 @@ public class MainController {
 
 		model.addAttribute("jsonData", jsonData);
 		
+        
+		
+		
 		return "eun/main/dash/mainPage";
+		
 	}
 	
 
