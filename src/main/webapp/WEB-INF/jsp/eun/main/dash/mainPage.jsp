@@ -47,8 +47,9 @@
 		<div class="btn mb20">
 <!-- 		<input type="text" id="nm" name="nm" title="그룹정보명" maxlength="100" /> -->
 		<!-- 선택한 노드명 변경 -> 선택한 노드명만 변경 -->
-<!-- 		<button type="button" class="" onclick="javascript:fncNodeNmUpdt();">[노드]정보명변경</button> -->
-		<button type="button" class="" onclick="javascript:fncNordRename();">[노드]정보명변경</button>
+<!-- 		<button type="button" class="" onclick="javascript:fncBefNordRename();">[노드]정보명변경</button> -->
+		<button type="button" class="" onclick="javascript:fncNodeNmUpdt();">[노드]정보명변경</button>
+<!-- 		<button type="button" class="" onclick="javascript:fncNordRename();">[노드]정보명변경</button> -->
 		</div>
 		
 		<div class="btn mb20">
@@ -104,12 +105,13 @@
 					,nameIsHTML: false		//html 태그 허용금지 ex.{"name":"<font color='red'>test</font>"}
 				},
 				callback: {
-					onClick: fncClikNode
-// 					,onRename: fncNordRename
+// 					onClick: fncClikNode
+					beforeRename: fncBefNordRename //true: onrename 실행
+					,onRename: fncNordRename
 				},
 				edit: {
 					editNameSelectAll: true
-					,removeTitle: "remove the node"	//이게 뭔지 모르겠어
+// 					,removeTitle: "remove the node"	//이게 뭔지 모르겠어
 				}
 				
 			};
@@ -154,6 +156,7 @@
 			//zTree 객체 할당
 			treeObj = $.fn.zTree.getZTreeObj("treeDemo");
 		
+			
 		
 		
 		}); //ready end
@@ -198,6 +201,8 @@ function cnvrtTree(jsonData) {
  * 선택한 노드 정보값 hidden 할당
  */
 function fncClikNode(event, treeId, treeNode, clickFlag) {
+	
+	
 	console.log("event : " + event+  " / treeId : " +treeId+  " / treeNode : " + treeNode+ " / clickFlag : " + clickFlag);
 	console.log("treeNode.id : " + treeNode.id +  " / treeNode.name : " + treeNode.name +  " / treeNode.pId : " + treeNode.pId +  " / treeNode.day_wrtr : " + treeNode.day_wrtr +  " / treeNode.day_wrtday : " + treeNode.day_wrtday);
 	
@@ -233,22 +238,19 @@ function fncFileDel() {
  * 
  */
 function fncNodeNmUpdt() {
-// 	$("#my_sn").val(treeNode.id);
-// 	$("#parent_sn").val(treeNode.pId);
-// 	$("#nm").val(treeNode.name);
-// 	$("#day_wrtday").val(treeNode.day_wrtday);
-// 	$("#day_wrtr").val(treeNode.day_wrtr);
-	
-// 	var treeObj = $.fn.zTree.getZTreeObj("treeDemo");
+	/*
+	+ 노드 이름 변경 과정
+	1. 노드 이름 변경 버튼에 onclick로 fncNodeNmUpdt()함수 설정
+	2. 해당 함수에서 선택한 노드의 값을 받아 nodes에 할당하고 해당 노드 editNamd 메소드 실행
+	3. set 설정 중 edit 부분에서 editNameSelectAll: true 로 변경하려는 노드이름 선택되게 설정
+	4. 콜백함수 중 onRename: fncNordRename()을 사용해 이름 변경 후 엔터 누를 때 (노드 이름 변경 후) 변경된 노드를 treeNode에 할당
+	*/
 	var nodes = treeObj.getSelectedNodes();
-// 	var nodes = treeObj.getNodes();
-	console.log("왜 안되냐1 : " + nodes[0].name);
+	console.log("##fncNodeNmUpdt## [nodes[0].name] : " + nodes[0].name);
 	treeObj.editName(nodes[0]);
-	
-	
-	
-	
-	
+
+
+    
 }
 
 /**
@@ -258,17 +260,42 @@ function fncFileNmUpdt() {
 	
 }
 
-
+var renameChk;
+function fncBefNordRename(treeId, treeNode, newName, isCancel) {
+	alert("before")
+    if (confirm("변경하신 이름으로 저장하시겠습니까?")) {
+       console.log("네")
+       renameChk = true;
+    } else {
+//     	 treeObj = $.fn.zTree.getZTreeObj("tree");
+       console.log("아니오")
+       renameChk = false;
+//    	 treeObj.cancelEditName();	//여기서 true되네
+       	//이래버리면 함수 멈추고 fncBefNordRename 다시 시작하네
+       	
+       	        treeObj.cancelEditName();
+        return; // 함수 종료
+    }
+// 	if(!renameChk)treeObj.cancelEditName();
+	
+	
+}
 
 function fncNordRename(event, treeId, treeNode, isCancel) {
+	//treeNode : 새로 변경된 노드의 정보 할당 (해당 인자 통해 새로 바꾼 이름확인 가능)
+	if(renameChk){
+	console.log("##fncNordRename##");
+	console.log("77event : " + event+  " / treeId : " +treeId+  " / treeNode : " + treeNode+ " / isCancel : " + isCancel);
+	console.log("77treeNode.id : " + treeNode.id +  " / treeNode.name : " + treeNode.name +  " / treeNode.pId : " + treeNode.pId +  " / treeNode.day_wrtr : " + treeNode.day_wrtr +  " / treeNode.day_wrtday : " + treeNode.day_wrtday);
+
 	
-	var nodes = treeObj.getSelectedNodes();
-// 	var nodes = treeObj.getNodes();
-	console.log("왜 안되냐77 : " + nodes[0].name);
-	treeObj.editName(nodes[0]);
+
+	
+// 	console.log("777event : " + event+  " / treeId : " +treeId+  " / treeNode : " + treeNode+ " / isCancel : " + isCancel);
+// 	console.log("777treeNode.id : " + treeNode.id +  " / treeNode.name : " + treeNode.name +  " / treeNode.pId : " + treeNode.pId +  " / treeNode.day_wrtr : " + treeNode.day_wrtr +  " / treeNode.day_wrtday : " + treeNode.day_wrtday);
 	
 	alert(treeNode.id + ", " + treeNode.name);
-	
+	}
 	
 	
 }
