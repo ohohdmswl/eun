@@ -76,8 +76,12 @@ public class MainController {
 		logger.info("renameNord.do null : " + mainVO.getParent_sn().equals(null) );
 		logger.info("renameNord.do 빈값 : " + mainVO.getParent_sn().equals("") );
 		
+		// checkChildState (-1 : 최하위노드, else : 폴더)
+		// 최하위노드(-1) : 
+		//상관없이 그냥 my_sn으로 흐음 디비구조를 알아야하겠는데
 		
-		String abc = "";
+		
+		
 		
 		return "eun/main/dash/test";
 //		return "abc";

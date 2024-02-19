@@ -20,6 +20,7 @@
 		<input type="hidden" name="day_wrtr" id="day_wrtr" value="" />
 		<input type="hidden" name="day_wrtday" id="day_wrtday" value="" />
 		<input type="hidden" name="newName" id="newName" value="" />
+		<input type="hidden" name="checkChildState" id="checkChildState" value="" />
 	
 		<!-- 변경할 새로운 이름 input id = "nm" -->
 		<!-- <input type="hidden" name="nm" id="nm" value="" /> -->
@@ -75,13 +76,15 @@
 					</tr>
 					<tr>
 						<th>첨부파일</th>
-						<td></td>
+						<td>선택된 파일 없음 (csv, xlsx파일만 첨부)</td>
 					</tr>
 				</tbody>
 				
 			</table>
 		</div>
 		
+		<!-- 정보 그룹명 설정(정보 그룹내에 파일 저장, 그룹명 미지정시 그룹외 표시) -->
+		<button type="button" class="" onclick="javascript:fncInsert();">데이터업로드</button>
 	
 	</form>
 
@@ -114,6 +117,9 @@
 					enable: false
 					,editNameSelectAll: true
 // 					,removeTitle: "remove the node"	//이게 뭔지 모르겠어
+				},
+				keep: {
+					parent: true //상위 노드의 하위 노드를 모두 제거해도 해당 'isParent' 속성이 여전히 true를 유지
 				}
 				
 			};
@@ -214,6 +220,7 @@ function fncClikNode(event, treeId, treeNode, clickFlag) {
 	$("#day_wrtday").val(treeNode.day_wrtday);
 	$("#day_wrtr").val(treeNode.day_wrtr);
 // 	$("#selectTid").val(treeNode.tId + "_span");
+	$("#checkChildState").val(treeNode.check_Child_State);
 	
 }		
 		
@@ -228,6 +235,24 @@ function fncFileDown() {
  * 
  */
 function fncNodeDel() {
+	/*
+	+ 노드 삭제 과정
+	1. 삭제 버튼에 onclick로 fncNodeDel()함수 설정 
+	2. 해당 함수에서 선택한 노드 값 받아 nodes에 할당, 해당 노드 remove 메소드 실행
+	3. 콜백함수 사용해 삭제 후 ~~
+	*/
+	var nodes = treeObj.getSelectedNodes();
+	console.log("##fncNodeDel## [nodes[0].name] : " + nodes[0].name);
+	
+	alert("어디한번 보자 : " + $("#checkChildState").val());
+	
+	if (confirm("선택한 노드를 삭제하시겠습니까?")) {
+		treeObj.removeNode(nodes[0]);
+	}else {
+		return;
+	}
+	
+	
 	
 }
 
@@ -298,13 +323,15 @@ function fncNordRename(event, treeId, treeNode, isCancel) {
 	if(renameChk){
 	console.log("##fncNordRename##");
 	console.log("77event : " + event+  " / treeId : " +treeId+  " / treeNode : " + treeNode+ " / isCancel : " + isCancel);
-	console.log("77treeNode.id : " + treeNode.id +  " / treeNode.name : " + treeNode.name +  " / treeNode.pId : " + treeNode.pId +  " / treeNode.day_wrtr : " + treeNode.day_wrtr +  " / treeNode.day_wrtday : " + treeNode.day_wrtday);
+	console.log("77treeNode.id : " + treeNode.id +  " / treeNode.name : " + treeNode.name +  " / treeNode.pId : " + treeNode.pId +  " / treeNode.day_wrtr : " + treeNode.day_wrtr +  " / treeNode.day_wrtday : " + treeNode.day_wrtday +  " / treeNode.check_Child_State : " + treeNode.check_Child_State);
 
 	
 	console.log("이름번경 : " + treeNode.id + ", " + treeNode.name);
 	
 	$("#newName").val(treeNode.name);
+	$("#checkChildState").val(treeNode.check_Child_State);	// -1 : 최하위노드 / 이외 : 촐더
 	console.log("이름번경 hidden : " + $("#newName").val());
+	console.log("이름번경 hidden : " + $("#checkChildState").val());
 	
 	$("#frm").attr({"action": "<c:out value='${pageContext.request.contextPath}/renameNord.do'/>", "method": "post"}).submit();
 	

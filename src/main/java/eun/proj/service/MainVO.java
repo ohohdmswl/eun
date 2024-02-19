@@ -9,6 +9,7 @@ public class MainVO {
 	private String day_wrtday;
 	
 	private String newName;
+	private String checkChildState;
 	
 	
 	public String getParent_sn() {
@@ -50,11 +51,21 @@ public class MainVO {
 	public void setNewName(String newName) {
 		this.newName = newName;
 	}
+	
+	
+	public String getCheckChildState() {
+		return checkChildState;
+	}
+	public void setCheckChildState(String checkChildState) {
+		this.checkChildState = checkChildState;
+	}
 	@Override
 	public String toString() {
 		return "MainVO [parent_sn=" + parent_sn + ", nm=" + nm + ", my_sn=" + my_sn + ", day_wrtr=" + day_wrtr
-				+ ", day_wrtday=" + day_wrtday + ", newName=" + newName + "]";
+				+ ", day_wrtday=" + day_wrtday + ", newName=" + newName + ", checkChildState=" + checkChildState + "]";
 	}
+
+	
 
 	
 	
