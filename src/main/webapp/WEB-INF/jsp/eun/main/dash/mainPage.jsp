@@ -306,7 +306,6 @@ function fncNordRename(event, treeId, treeNode, isCancel) {
 	$("#newName").val(treeNode.name);
 	console.log("이름번경 hidden : " + $("#newName").val());
 	
-	$("#frm").attr("enctype", "");
 	$("#frm").attr({"action": "<c:out value='${pageContext.request.contextPath}/renameNord.do'/>", "method": "post"}).submit();
 	
 	}

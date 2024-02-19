@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -61,16 +62,24 @@ public class MainController {
 		
 	}
 	
-	@RequestMapping(value = "/renameNord.do")
-	public String renameNord(@ModelAttribute("mainVO") MainVO mainVO, ModelMap model, SessionStatus status, MultipartHttpServletRequest multipartRequest, HttpServletResponse response) throws Exception {
+	@RequestMapping(value = "/renameNord.do", method = RequestMethod.POST)
+	public String renameNord(@ModelAttribute("mainVO") MainVO mainVO, ModelMap model, HttpServletResponse response , SessionStatus status, MultipartHttpServletRequest multipartRequest) throws Exception {
+//		public String renameNord(@ModelAttribute("mainVO") MainVO mainVO, ModelMap model, SessionStatus status, MultipartHttpServletRequest multipartRequest, HttpServletResponse response) throws Exception {
 		
 		logger.info("##### [renameNord] (/renameNord.do)  #####");
 		
 		
+		logger.info("renameNord.do : " + mainVO );	// null값들이 빈값으로 들어옴
+		logger.info("renameNord.do multifile : " + multipartRequest.getFileMap());
+//		logger.info("renameNord.do multifile : " + request.getFiles("board_file"));
+		
+		logger.info("renameNord.do null : " + mainVO.getParent_sn().equals(null) );
+		logger.info("renameNord.do 빈값 : " + mainVO.getParent_sn().equals("") );
+		
 		
 		String abc = "";
 		
-		return "eun/main/dash/mainPage";
+		return "eun/main/dash/test";
 //		return "abc";
 	}
 	
@@ -78,7 +87,6 @@ public class MainController {
 	public String renameNordFile(@ModelAttribute("mainVO") MainVO mainVO, ModelMap model, SessionStatus status, MultipartHttpServletRequest multipartRequest, HttpServletResponse response) throws Exception {
 		
 		logger.info("##### [renameNordFile] (/renameNordFile.do)  #####");
-		
 		
 		
 		String abc = "";
