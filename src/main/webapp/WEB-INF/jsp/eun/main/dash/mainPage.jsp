@@ -19,6 +19,7 @@
 		<input type="hidden" name="my_sn" id="my_sn" value="" />
 		<input type="hidden" name="day_wrtr" id="day_wrtr" value="" />
 		<input type="hidden" name="day_wrtday" id="day_wrtday" value="" />
+		<input type="hidden" name="newName" id="newName" value="" />
 	
 		<!-- 변경할 새로운 이름 input id = "nm" -->
 		<!-- <input type="hidden" name="nm" id="nm" value="" /> -->
@@ -105,12 +106,13 @@
 					,nameIsHTML: false		//html 태그 허용금지 ex.{"name":"<font color='red'>test</font>"}
 				},
 				callback: {
-// 					onClick: fncClikNode
+					onClick: fncClikNode,
 					beforeRename: fncBefNordRename //true: onrename 실행
 					,onRename: fncNordRename
 				},
 				edit: {
-					editNameSelectAll: true
+					enable: false
+					,editNameSelectAll: true
 // 					,removeTitle: "remove the node"	//이게 뭔지 모르겠어
 				}
 				
@@ -204,13 +206,15 @@ function fncClikNode(event, treeId, treeNode, clickFlag) {
 	
 	
 	console.log("event : " + event+  " / treeId : " +treeId+  " / treeNode : " + treeNode+ " / clickFlag : " + clickFlag);
-	console.log("treeNode.id : " + treeNode.id +  " / treeNode.name : " + treeNode.name +  " / treeNode.pId : " + treeNode.pId +  " / treeNode.day_wrtr : " + treeNode.day_wrtr +  " / treeNode.day_wrtday : " + treeNode.day_wrtday);
+	console.log("treeNode.id : " + treeNode.id +  " / treeNode.name : " + treeNode.name +  " / treeNode.pId : " + treeNode.pId +  " / treeNode.day_wrtr : " + treeNode.day_wrtr +  " / treeNode.day_wrtday : " + treeNode.day_wrtday+  " / treeNode.tId : " + treeNode.tId);
 	
 	$("#my_sn").val(treeNode.id);
 	$("#parent_sn").val(treeNode.pId);
 // 	$("#nm").val(treeNode.name);
 	$("#day_wrtday").val(treeNode.day_wrtday);
 	$("#day_wrtr").val(treeNode.day_wrtr);
+// 	$("#selectTid").val(treeNode.tId + "_span");
+	
 }		
 		
 /**
@@ -248,8 +252,7 @@ function fncNodeNmUpdt() {
 	var nodes = treeObj.getSelectedNodes();
 	console.log("##fncNodeNmUpdt## [nodes[0].name] : " + nodes[0].name);
 	treeObj.editName(nodes[0]);
-
-
+	
     
 }
 
@@ -263,22 +266,31 @@ function fncFileNmUpdt() {
 var renameChk;
 function fncBefNordRename(treeId, treeNode, newName, isCancel) {
 	alert("before")
+	
+	console.log(isCancel);
+	console.log(newName);
+	console.log("후후 : " + treeNode.name);
+	
+	if(isCancel) {
+		treeObj.refresh();
+		return;
+	}
+
     if (confirm("변경하신 이름으로 저장하시겠습니까?")) {
-       console.log("네")
-       renameChk = true;
+		console.log("네")
+		renameChk = true;
+		
     } else {
-//     	 treeObj = $.fn.zTree.getZTreeObj("tree");
-       console.log("아니오")
-       renameChk = false;
-//    	 treeObj.cancelEditName();	//여기서 true되네
-       	//이래버리면 함수 멈추고 fncBefNordRename 다시 시작하네
-       	
-       	        treeObj.cancelEditName();
-        return; // 함수 종료
+		console.log("아니오")
+		renameChk = false;
+		
+		//둘 중 하나 골라쓰면됨
+// 		treeObj.refresh();	//취소시 zTree 새로고침 
+		treeObj.cancelEditName();	//여기서 true되네 -> 여기서 다시 fncBefNordRename 함수 콜백 -> if(isCancel) 통해 zTree 새로고침
+		
+        return false; // 함수 종료
     }
-// 	if(!renameChk)treeObj.cancelEditName();
-	
-	
+// 	return true;
 }
 
 function fncNordRename(event, treeId, treeNode, isCancel) {
@@ -289,15 +301,15 @@ function fncNordRename(event, treeId, treeNode, isCancel) {
 	console.log("77treeNode.id : " + treeNode.id +  " / treeNode.name : " + treeNode.name +  " / treeNode.pId : " + treeNode.pId +  " / treeNode.day_wrtr : " + treeNode.day_wrtr +  " / treeNode.day_wrtday : " + treeNode.day_wrtday);
 
 	
-
+	console.log("이름번경 : " + treeNode.id + ", " + treeNode.name);
 	
-// 	console.log("777event : " + event+  " / treeId : " +treeId+  " / treeNode : " + treeNode+ " / isCancel : " + isCancel);
-// 	console.log("777treeNode.id : " + treeNode.id +  " / treeNode.name : " + treeNode.name +  " / treeNode.pId : " + treeNode.pId +  " / treeNode.day_wrtr : " + treeNode.day_wrtr +  " / treeNode.day_wrtday : " + treeNode.day_wrtday);
+	$("#newName").val(treeNode.name);
+	console.log("이름번경 hidden : " + $("#newName").val());
 	
-	alert(treeNode.id + ", " + treeNode.name);
+	$("#frm").attr("enctype", "");
+	$("#frm").attr({"action": "<c:out value='${pageContext.request.contextPath}/renameNord.do'/>", "method": "post"}).submit();
+	
 	}
-	
-	
 }
 
 		

@@ -3,6 +3,7 @@ package eun.proj.web;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -10,6 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -58,8 +61,30 @@ public class MainController {
 		
 	}
 	
-
+	@RequestMapping(value = "/renameNord.do")
+	public String renameNord(@ModelAttribute("mainVO") MainVO mainVO, ModelMap model, SessionStatus status, MultipartHttpServletRequest multipartRequest, HttpServletResponse response) throws Exception {
+		
+		logger.info("##### [renameNord] (/renameNord.do)  #####");
+		
+		
+		
+		String abc = "";
+		
+		return "eun/main/dash/mainPage";
+//		return "abc";
+	}
 	
+	@RequestMapping(value = "/renameNordFile.do")
+	public String renameNordFile(@ModelAttribute("mainVO") MainVO mainVO, ModelMap model, SessionStatus status, MultipartHttpServletRequest multipartRequest, HttpServletResponse response) throws Exception {
+		
+		logger.info("##### [renameNordFile] (/renameNordFile.do)  #####");
+		
+		
+		
+		String abc = "";
+		
+		return abc;
+	}
 	
 	
 }
