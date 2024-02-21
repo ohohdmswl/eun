@@ -151,9 +151,9 @@ public class MainController {
 		model.addAttribute("parentId", parentId);
 		model.addAttribute("type", type);
 		
-//		return "eun/main/dash/devGuidePop";
+		return "eun/main/dash/devGuidePop";
 		
-		
+		/*
 	    URL url = new URL("http://kosis.kr/openapi/Expt/statisticsList.do?method=getList&apiKey=MTBjZjAwY2JhNzUxNzgyMjBjOTE4YzA3NDJlMTk2MTE=&vwCd=MT_ZTITLE&parentListId=B_003&format=json");
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setRequestMethod("GET");
@@ -176,12 +176,17 @@ public class MainController {
 		map.put("result", sb.toString());
 		model.addAttribute("result",map);
 		return "jsonView";
-		
+		*/
 		
 		
 	}
-	
-	
-	
-	
+	/*
+	@RequestMapping(value = "/devGuidePop.jsp")
+	public String testtest(ModelMap model, HttpServletRequest request) throws Exception {
+		
+		logger.info("##### [testtest] (/devGuidePop.jsp)  #####");
+		
+		return "eun/main/dash/test";
+	}
+	*/
 }
