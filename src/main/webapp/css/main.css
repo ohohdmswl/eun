@@ -23,6 +23,11 @@
 .mb90{margin-bottom: 90px !important}
 .mb100{margin-bottom: 100px !important}
 
+.flex {display: flex;}
+.flexCol {flex-direction: column;}
+.flexRow {flex-direction: row;}
+
+
 
 .table{
 	border: 1px black solid;
