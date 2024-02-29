@@ -1,9 +1,11 @@
 package eun.proj.web;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,6 +30,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import eun.proj.service.MainService;
 import eun.proj.service.MainVO;
+import eun.proj.service.SviewVO;
 
 
 @Controller
@@ -36,6 +39,7 @@ public class MainController {
 	/* Service */
 	@Resource (name = "mainService")
 	private MainService mainService;
+	
 	
 	
    // Set logger
@@ -130,7 +134,7 @@ public class MainController {
 	}
 	
 //	@ResponseBody
-	@RequestMapping(value = "/devGuidePop.do", method = RequestMethod.POST)
+	@RequestMapping(value = "/devGuidePop.jsp", method = RequestMethod.POST)
 	public String devGuidePop(ModelMap model, @RequestParam String method,
             @RequestParam String key,
             @RequestParam String vwcd,
@@ -189,4 +193,25 @@ public class MainController {
 		return "eun/main/dash/test";
 	}
 	*/
+	
+	
+	//------------------------------------------------------------------------------------------------------------------//
+	//시작
+	@RequestMapping(value = "/SpageView.do")
+	public String SpageView(@ModelAttribute("searchVO") SviewVO searchVO,
+			ModelMap model, HttpServletRequest request, HttpServletResponse response) throws IOException, SQLException {
+	
+		
+		
+		
+		
+		return "eun/main/dash/16view";
+	}
+		
+	
+	
+	
+	
+	
+	
 }

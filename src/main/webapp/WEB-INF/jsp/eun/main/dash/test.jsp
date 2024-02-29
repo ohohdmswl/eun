@@ -60,7 +60,7 @@ function getSubList(vwcd, listLev, parentId) {
 // 	url : "http://localhost:8080/devGuidePop.do?method=getList&key=123&vwcd=MT_ZTITLE&parentId=" + parentId + "&type=json",
 // 	url : "http://devGuidePop.jsp?method=getList&key=MTBjZjAwY2JhNzUxNzgyMjBjOTE4YzA3NDJlMTk2MTE=&vwcd=MT_ZTITLE&parentId=" + parentId + "&type=json",
 // 	url : "http://localhost:8080/devGuidePop.jsp?method=getList&key=MTBjZjAwY2JhNzUxNzgyMjBjOTE4YzA3NDJlMTk2MTE=&vwcd=MT_ZTITLE&parentId=" + parentId + "&type=json",
-	url : "http://localhost:8080/devGuidePop.jsp?method=getList&key=MTBjZjAwY2JhNzUxNzgyMjBjOTE4YzA3NDJlMTk2MTE=&vwcd=MT_ZTITLE&parentId=" + parentId + "&type=json",
+	url : "http://localhost:8080/devGuidePop.do?method=getList&key=MTBjZjAwY2JhNzUxNzgyMjBjOTE4YzA3NDJlMTk2MTE=&vwcd=MT_ZTITLE&parentId=" + parentId + "&type=json",
 	sync : true,
 	load : function(resObj, a, b) { mapData = resObj; }, //{ mapData = resObj; },
 	error : function ( resObj, e ) { alert(dojo.toJson(resObj)); }

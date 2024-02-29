@@ -3,9 +3,7 @@
 <!-- header -->
 <%-- <jsp:include page="/WEB-INF/jsp/eun/main/layout/header.jsp"></jsp:include> --%>
 <%@ include file="/WEB-INF/jsp/eun/main/layout/header.jsp"%>
-<%@ include file="/WEB-INF/jsp/eun/main/layout/taglib.jsp"%>
-<link rel="stylesheet" type="text/css" href="<c:url value="css/zTreeStyle.css"/>">
-<link rel="stylesheet" type="text/css" href="<c:url value="css/main.css"/>">
+
 
 
 <h6>안녕 나는 메인페이지야</h6>
